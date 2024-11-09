@@ -5,29 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./src/output.css" />
     <title>Lista de Tarefas</title>
+    <style>
+      /* Estilo para a linha pontilhada */
+      .tarefa {
+        padding-left: 15px;
+        border-left: 2px dotted #2f81f7;
+        color: #ffffff;
+        margin-bottom: 5px;
+      }
+
+      #tarefas {
+        list-style-type: none;
+        padding-left: 0;
+      }
+    </style>
   </head>
   <body class="bg-bg-default text-text-color">
-    <header class="bg-[#161b22] flex justify-start p-5 px-10">
+    <header class="bg-[#161b22] flex justify-center p-5 px-10">
       <h1 class="text-3xl font-bold underline">Suas Tarefas</h1>
     </header>
-    <main
-      class="flex items-start min-h-screen m-5 grid grid-rows-4"
-      id="container"
-    >
-      <h1 class="text-3xl font-bold">Lista de tarefas</h1>
-      <p class="">
+    <main class="m-5 flex flex-col gap-4" id="container">
+      <div class="flex items-center gap-4">
         <input
           type="text"
           id="input-nova-tarefa"
-          class="rounded-md text-black hover:bg-blue-500 hover:text-white transition-colors duration-300 p-2"
+          class="rounded-md text-black p-2"
+          placeholder="Digite sua tarefa"
         />
-        <button
-          id="btn-add-tarefa"
-          class="bg-button-color text-black rounded-md p-2 mx-2 text-sm"
-        >
-          Adicionar tarefa
+        <button id="btn-add-tarefa" class="size-10">
+          <img src="./img/addTarefa.svg" alt="Adicionar Tarefa" />
         </button>
-      </p>
+      </div>
       <ol id="tarefas"></ol>
     </main>
     <script src="./js/script.js"></script>
