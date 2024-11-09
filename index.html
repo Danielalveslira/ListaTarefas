@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="./src/output.css" />
     <title>Lista de Tarefas</title>
     <style>
-      /* Estilo para a linha pontilhada */
       .tarefa {
         padding-left: 15px;
         border-left: 2px dotted #2f81f7;
@@ -18,11 +17,96 @@
         list-style-type: none;
         padding-left: 0;
       }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #161b22;
+        padding: 20px;
+      }
+
+      .header-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #ffffff;
+        text-decoration: underline;
+        margin: 0 auto;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      #xp-container {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        margin-right: 20px;
+      }
+
+      #xp-icon {
+        background-color: #4caf50;
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        border-radius: 2px;
+      }
+
+      #xp-tooltip {
+        visibility: hidden;
+        background-color: #6c757d;
+        color: #ffffff;
+        text-align: center;
+        padding: 9px 17px;
+        border-radius: 5px;
+        font-size: 0.75rem;
+        position: absolute;
+        z-index: 1;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+        margin-top: 5px;
+        margin-left: 5px;
+      }
+
+      #xp-tooltip::after {
+        content: "";
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent #6c757d transparent;
+      }
+
+      #xp-container:hover #xp-tooltip,
+      #xp-container:focus #xp-tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .tarefa {
+        padding-left: 15px;
+        border-left: 2px dotted #2f81f7;
+        color: #ffffff;
+        margin-bottom: 5px;
+        word-wrap: break-word;
+        word-break: break-word;
+        max-width: 100%;
+        white-space: normal;
+      }
     </style>
   </head>
   <body class="bg-bg-default text-text-color">
-    <header class="bg-[#161b22] flex justify-center p-5 px-10">
-      <h1 class="text-3xl font-bold underline">Suas Tarefas</h1>
+    <header>
+      <h1 class="header-title">Suas Tarefas</h1>
+      <div id="xp-container" tabindex="0">
+        <div id="xp-icon"></div>
+        <div id="xp-tooltip">XP Total: <span id="xpPoints">0</span></div>
+      </div>
     </header>
     <main class="m-5 flex flex-col gap-4" id="container">
       <div class="flex items-center gap-4">
