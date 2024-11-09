@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./src/output.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
     <title>Lista de Tarefas</title>
     <style>
       .tarefa {
@@ -39,9 +45,10 @@
 
       #xp-container {
         position: relative;
-        display: inline-block;
+        display: flex;
+        align-items: center;
         cursor: pointer;
-        margin-right: 20px;
+        margin-right: 10px;
       }
 
       #xp-icon {
@@ -50,6 +57,13 @@
         height: 10px;
         display: inline-block;
         border-radius: 2px;
+        margin-right: 5px;
+      }
+
+      #xpPoints {
+        font-size: 13px;
+        color: #ffffff;
+        font-family: "Fira Code", monospace;
       }
 
       #xp-tooltip {
@@ -57,18 +71,16 @@
         background-color: #6c757d;
         color: #ffffff;
         text-align: center;
-        padding: 9px 17px;
+        padding: 5px 8px;
         border-radius: 5px;
         font-size: 0.75rem;
         position: absolute;
         z-index: 1;
-        top: 20px;
-        left: 50%;
+        top: 120%;
+        left: 20%;
         transform: translateX(-50%);
         opacity: 0;
-        transition: opacity 0.3s;
-        margin-top: 5px;
-        margin-left: 5px;
+        transition: opacity 0.3s ease;
       }
 
       #xp-tooltip::after {
@@ -88,15 +100,42 @@
         opacity: 1;
       }
 
+      #container-tarefas {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      #tarefas {
+        width: 90%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 10px;
+      }
+
       .tarefa {
         padding-left: 15px;
         border-left: 2px dotted #2f81f7;
         color: #ffffff;
         margin-bottom: 5px;
         word-wrap: break-word;
-        word-break: break-word;
-        max-width: 100%;
         white-space: normal;
+      }
+
+      #tarefas {
+        max-width: 100%;
+        overflow-x: auto;
+        padding: 10px;
+      }
+
+      .tarefa {
+        padding-left: 15px;
+        border-left: 2px dotted #2f81f7;
+        color: #ffffff;
+        margin-bottom: 5px;
+        max-width: 100%;
+        text-overflow: ellipsis;
       }
     </style>
   </head>
@@ -105,11 +144,12 @@
       <h1 class="header-title">Suas Tarefas</h1>
       <div id="xp-container" tabindex="0">
         <div id="xp-icon"></div>
-        <div id="xp-tooltip">XP Total: <span id="xpPoints">0</span></div>
+        <span id="xpPoints">0</span>
+        <div id="xp-tooltip">XP</div>
       </div>
     </header>
     <main class="m-5 flex flex-col gap-4" id="container">
-      <div class="flex items-center gap-4">
+      <div class="flex items-center justify-center gap-4">
         <input
           type="text"
           id="input-nova-tarefa"
