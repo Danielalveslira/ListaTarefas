@@ -17,6 +17,8 @@
         border-left: 2px dotted #2f81f7;
         color: #ffffff;
         margin-bottom: 5px;
+        word-wrap: break-word;
+        white-space: normal;
       }
 
       #tarefas {
@@ -114,15 +116,6 @@
         padding: 10px;
       }
 
-      .tarefa {
-        padding-left: 15px;
-        border-left: 2px dotted #2f81f7;
-        color: #ffffff;
-        margin-bottom: 5px;
-        word-wrap: break-word;
-        white-space: normal;
-      }
-
       #tarefas {
         max-width: 100%;
         overflow-x: auto;
@@ -136,6 +129,19 @@
         margin-bottom: 5px;
         max-width: 100%;
         text-overflow: ellipsis;
+      }
+
+      #input-nova-tarefa {
+        width: 400px; /* Adjust this width as needed for desktop */
+        padding: 8px;
+        border-radius: 4px;
+      }
+
+      /* Media query for smaller screens */
+      @media (max-width: 768px) {
+        #input-nova-tarefa {
+          width: 71%; /* Full width on mobile */
+        }
       }
     </style>
   </head>
