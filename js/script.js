@@ -18,7 +18,7 @@ function saveXP() {
 
 function criaLi() {
   const li = document.createElement('li');
-  li.classList.add('tarefa', 'bg-gray-800', 'p-2', 'rounded');
+  li.classList.add('tarefa', 'bg-gray-900', 'p-2', 'rounded');
   return li;
 }
 
@@ -57,6 +57,14 @@ function criaBotoes(li) {
 }
 
 function criaTarefa(textoInput) {
+  const listaDeTarefas = Array.from(tarefas.querySelectorAll('.tarefa-texto')).map(tarefa => tarefa.innerText);
+
+  if (listaDeTarefas.includes(textoInput)) {
+    alert('Essa tarefa já existe!');
+    limpaInput();
+    return;
+  }
+
   const li = criaLi();
 
   const tarefaTexto = document.createElement('span');
