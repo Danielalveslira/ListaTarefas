@@ -57,6 +57,17 @@ function criaBotoes(li) {
 }
 
 function criaTarefa(textoInput) {
+  if (textoInput.length < 10) {
+    alert("A tarefa precisa ter pelo menos 10 caracteres.")
+    limpaInput();
+    return
+  } else if (textoInput.length > 100) {
+    alert("A tarefa não pode ter mais de 100 caracteres.");
+    limpaInput();
+    return;
+  }
+
+
   const listaDeTarefas = Array.from(tarefas.querySelectorAll('.tarefa-texto')).map(tarefa => tarefa.innerText);
 
   if (listaDeTarefas.includes(textoInput)) {

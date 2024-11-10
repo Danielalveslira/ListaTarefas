@@ -14,146 +14,15 @@
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
+    <link rel="shortcut icon" type="image/png" href="./img/listartarefas.png" />
+    <link rel="stylesheet" href="style.css" />
     <title>Lista de Tarefas</title>
-    <style>
-      .tarefa {
-        padding-left: 15px;
-        border-left: 2px dotted #2f81f7;
-        color: #ffffff;
-        margin-bottom: 5px;
-        word-wrap: break-word;
-        white-space: normal;
-      }
-
-      #tarefas {
-        list-style-type: none;
-        padding-left: 0;
-      }
-
-      header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: #161b22;
-        padding: 20px;
-      }
-
-      .header-title {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #ffffff;
-        text-decoration: underline;
-        margin: 0 auto;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-
-      #xp-container {
-        position: relative;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        margin-right: 10px;
-      }
-
-      #xp-icon {
-        background-color: #4caf50;
-        width: 10px;
-        height: 10px;
-        display: inline-block;
-        border-radius: 2px;
-        margin-right: 5px;
-      }
-
-      #xpPoints {
-        font-size: 13px;
-        color: #ffffff;
-        font-family: "Fira Code", monospace;
-      }
-
-      #xp-tooltip {
-        visibility: hidden;
-        background-color: #6c757d;
-        color: #ffffff;
-        text-align: center;
-        padding: 5px 8px;
-        border-radius: 5px;
-        font-size: 0.75rem;
-        position: absolute;
-        z-index: 1;
-        top: 120%;
-        left: 20%;
-        transform: translateX(-50%);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      #xp-tooltip::after {
-        content: "";
-        position: absolute;
-        top: -5px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-width: 5px;
-        border-style: solid;
-        border-color: transparent transparent #6c757d transparent;
-      }
-
-      #xp-container:hover #xp-tooltip,
-      #xp-container:focus #xp-tooltip {
-        visibility: visible;
-        opacity: 1;
-      }
-
-      #container-tarefas {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-
-      #tarefas {
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 10px;
-      }
-
-      #tarefas {
-        max-width: 100%;
-        overflow-x: auto;
-        padding: 10px;
-      }
-
-      .tarefa {
-        padding-left: 15px;
-        border-left: 2px dotted #2f81f7;
-        color: #ffffff;
-        margin-bottom: 5px;
-        max-width: 100%;
-        text-overflow: ellipsis;
-      }
-
-      #input-nova-tarefa {
-        width: 500px; /* Adjust this width as needed for desktop */
-        padding: 8px;
-        border-radius: 4px;
-      }
-
-      /* Media query for smaller screens */
-      @media (max-width: 768px) {
-        #input-nova-tarefa {
-          width: 71%; /* Full width on mobile */
-        }
-      }
-    </style>
   </head>
   <body class="bg-bg-default text-text-color">
     <header>
       <h1 class="header-title">Suas Tarefas</h1>
       <div id="xp-container" tabindex="0">
-        <div id="xp-icon"></div>
+        <div id="xp-icon"><img src="./img/xp.png" alt="" /></div>
         <span id="xpPoints">0</span>
         <div id="xp-tooltip">XP</div>
       </div>
@@ -172,6 +41,9 @@
       </div>
       <ol id="tarefas"></ol>
     </main>
+    <footer class="footer-fixo bg-gray-900 text-white p-4 text-center">
+      &copy; 2024 - Todos os direitos reservados
+    </footer>
     <script src="./js/script.js"></script>
   </body>
 </html>
