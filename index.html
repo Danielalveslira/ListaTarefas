@@ -18,21 +18,39 @@
     <link rel="stylesheet" href="style.css" />
     <title>Lista de Tarefas</title>
   </head>
-  <body class="bg-bg-default text-text-color">
+  <body
+    class="bg-bg-default text-text-color dark:bg-bg-dark dark:text-text-dark"
+  >
     <header>
-      <h1 class="header-title">Suas Tarefas</h1>
+      <h1 class="header-title text-2xl">Suas Tarefas</h1>
+
+      <button id="toggle-theme" class="p-2 rounded focus:outline-none">
+        <img
+          id="sun-icon"
+          src="./img/sun.svg"
+          alt="Sol"
+          class="h-6 w-6 hidden dark:inline"
+        />
+
+        <img
+          id="moon-icon"
+          src="./img/moon.svg"
+          alt="Lua"
+          class="h-6 w-6 inline dark:hidden"
+        />
+      </button>
       <div id="xp-container" tabindex="0">
         <div id="xp-icon"><img src="./img/xp.png" alt="" /></div>
         <span id="xpPoints">0</span>
         <div id="xp-tooltip">XP</div>
       </div>
     </header>
-    <main class="m-5 flex flex-col gap-4" id="container">
+    <main class="m-5 flex flex-col gap-4 mb-20" id="container">
       <div class="flex items-center justify-center gap-4">
         <input
           type="text"
           id="input-nova-tarefa"
-          class="rounded-md text-black p-2"
+          class="rounded-md p-2 bg-gray-900 dark:bg-gray-300 text-gray-100 dark:text-gray-100"
           placeholder="Digite sua tarefa"
         />
         <button id="btn-add-tarefa" class="size-10">
@@ -41,9 +59,20 @@
       </div>
       <ol id="tarefas"></ol>
     </main>
-    <footer class="footer-fixo bg-gray-900 text-white p-4 text-center">
-      &copy; 2024 - Todos os direitos reservados
+    <footer
+      class="footer-fixo border-t border-gray-300 dark:border-gray-800 text-bg-azul dark:bg-azul p-4 text-center grid grid-flow-col justify-stretch gap-5"
+    >
+      <a target="_blank" href="https://github.com/Danielalveslira/ListaTarefas"
+        ><p>GitHub</p></a
+      >
+      <a
+        target="_blank"
+        href="https://www.canva.com/design/DAGWBrSqEwY/8fRhNwZbOBDiHt7ttgmcIw/edit?utm_content=DAGWBrSqEwY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+        ><p>Sobre</p></a
+      >
+      <a target="_blank" href="mailto:dnllira1@gmail.com"><p>Contato</p></a>
     </footer>
     <script src="./js/script.js"></script>
+    <script src="./js/darkMode.js"></script>
   </body>
 </html>

@@ -1,15 +1,29 @@
+/* Estilo padrão (modo claro) */
 .tarefa {
-  padding-left: 15px;
+  padding: 15px;
+  border-radius: px;
+  background-color: #ffffff; /* Cor de fundo padrão no modo claro */
+  color: #000000 !important; /* Cor do texto padrão no modo claro (preto) */
+  margin-bottom: 10px;
+  border-left: 2px dotted #000000;
+}
+
+/* Modo escuro */
+.dark .tarefa {
+  color: #ffffff !important; /* Cor do texto no modo escuro (branco) */
+  background-color: #0d1117;
   border-left: 2px dotted #2f81f7;
-  color: #ffffff;
-  margin-bottom: 5px;
-  word-wrap: break-word;
-  white-space: normal;
 }
 
 #tarefas {
   list-style-type: none;
   padding-left: 0;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 header {
@@ -93,32 +107,14 @@ header {
   height: 100vh;
 }
 
-#tarefas {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 10px;
-}
-
-#tarefas {
-  max-width: 100%;
-  overflow-x: auto;
-  padding: 10px;
-}
-
-.tarefa {
-  padding-left: 15px;
-  border-left: 2px dotted #2f81f7;
-  color: #ffffff;
-  margin-bottom: 5px;
-  max-width: 100%;
-  text-overflow: ellipsis;
-}
-
 #input-nova-tarefa {
-  width: 500px; /* Adjust this width as needed for desktop */
+  width: 500px;
   padding: 8px;
   border-radius: 4px;
+}
+
+.dark #input-nova-tarefa {
+  color: #000000;
 }
 
 /* Footer */
@@ -130,11 +126,12 @@ header {
   height: 60px;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-/* Media query for smaller screens */
 @media (max-width: 768px) {
   #input-nova-tarefa {
-    width: 71%; /* Full width on mobile */
+    width: 71%;
   }
 }

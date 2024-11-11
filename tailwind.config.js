@@ -1,13 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: ["./src/**/*.{html,js}", '*.{html,js}'],
   theme: {
     extend: {
       colors: {
-        "bg-default": "#0d1117",
         "text-color": "#e6edf3",
         "button-color": "#3fb950",
-        "bg-azul": "#2f81f7"
+        "bg-azul": "#2f81f7",
+        'bg-default': '#ffffff', // cor de fundo do modo claro
+        'bg-dark': '#0d1117', // cor de fundo do modo escuro
+        'text-light': '#1a202c', // cor do texto no modo claro
+        'text-dark': '#ffffff', // cor do texto no modo escuro
       }
     },
   },
