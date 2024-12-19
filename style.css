@@ -8,8 +8,6 @@
   --cor-borda-escuro: #2f81f7;
   --cor-texto-concluido: #888;
   --cor-borda-concluido: #ccc;
-  --cor-texto-claro: #333;
-  --cor-texto-escuro: #eee;
 }
 
 body {
@@ -25,7 +23,7 @@ body {
   background-color: var(--cor-fundo-claro);
   color: var(--cor-texto-claro);
   margin-bottom: 10px;
-  word-wrap: break-word; /* Quebra palavras longas */
+  word-wrap: break-word;
 }
 
 .dark .tarefa {
@@ -39,12 +37,11 @@ body {
 }
 
 .data-criacao {
-  font-size: 12px;
-  color: var(var(--cor-texto-claro));
+  color: var(--cor-texto-claro);
 }
 
 .dark .data-criacao {
-  color: var(--cor-texto-escuro);
+  color: white;
 }
 
 /* Tarefas Concluídas */
@@ -62,11 +59,14 @@ body {
 #tarefas,
 #tarefas-concluidas {
   list-style-type: none;
-  padding-left: 0;
+  padding: 10px;
   width: 100%;
   max-width: 600px;
   margin: 10px auto;
-  padding: 10px;
+}
+
+.btn-limpar {
+  text-align: center;
 }
 
 header {
@@ -82,8 +82,6 @@ header {
   font-weight: bold;
   color: #ffffff;
   text-decoration: underline;
-  text-align: center;
-  margin: 0 auto;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -146,46 +144,48 @@ header {
   border-color: transparent transparent #6c757d transparent;
 }
 
-#xp-container:hover #xp-tooltip,
-#xp-container:focus #xp-tooltip {
+#xp-container:hover #xp-tooltip {
   visibility: visible;
   opacity: 1;
 }
 
-/* Input */
+#input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 600px;
+}
+
 #input-nova-tarefa {
-  width: 100%; /* Ocupa 100% do container pai */
-  max-width: 580px; /* Largura máxima para alinhar com a lista */
+  width: 70%;
+  max-width: 580px;
   padding: 8px;
   border-radius: 4px;
-  box-sizing: border-box; /* Inclui padding e borda na largura */
-  margin: 0 auto; /* Centraliza o input */
-  display: block; /* Evita espaços extras */
+  box-sizing: border-box;
 }
 
 .dark #input-nova-tarefa {
   color: #000;
 }
 
-/* Container de tarefas */
 #container-tarefas {
   display: flex;
-  flex-direction: column; /* Alinha os elementos verticalmente */
+  flex-direction: column;
   align-items: center;
-  padding: 20px; /* Adiciona padding ao container */
-  min-height: calc(
-    100vh - 120px
-  ); /* Altura mínima para evitar que o footer sobreponha o conteúdo */
+  padding: 20px;
+  min-height: calc(100vh - 120px);
 }
 
 /* Botões */
 .botoes {
   display: flex;
-  margin-top: 5px; /* Espaçamento entre o texto/data e os botões */
+  margin-top: 5px;
 }
 
 .botoes button {
-  margin: 0 5px; /* Espaçamento entre os botões */
+  margin: 0 5px;
 }
 
 .footer-fixo {
@@ -198,11 +198,10 @@ header {
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 @media (max-width: 768px) {
   #input-nova-tarefa {
-    max-width: 90%; /* Ajussta a largura máxima em telas menores */
+    max-width: 90%;
   }
 }

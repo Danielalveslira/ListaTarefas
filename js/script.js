@@ -3,6 +3,7 @@ const btnAddTarefa = document.querySelector('#btn-add-tarefa');
 const tarefas = document.querySelector('#tarefas');
 const tarefasConcluidas = document.querySelector('#tarefas-concluidas');
 const xpDisplay = document.querySelector('#xpPoints');
+const tarefasContainer = document.querySelector('#tarefas-container');
 let xpPoints = 0;
 
 /** Carrega o XP do localStorage */
@@ -93,7 +94,7 @@ function criaTarefa(textoInput, dataCriacaoSalva, concluida = false) {
     tarefasConcluidas.appendChild(li);
   }
   dataCriacao.style.marginLeft = '5px';
-  dataCriacao.style.fontSize = '0.9em';
+  dataCriacao.style.fontSize = '12px';
 
   limpaInput();
   salvarTarefas();
@@ -189,9 +190,31 @@ inputTarefa.addEventListener('keypress', function (e) {
   }
 });
 
-/** Adiciona uma tarefa ao clicar no botão */
-btnAddTarefa.addEventListener('click', adicionarTarefa);
+// Cria o botão de limpar tarefas concluídas
+function criaBotaoLimpar() {
+  const btnLimpar = document.createElement('button');
+  btnLimpar.innerText = 'Limpar Concluídas';
+  btnLimpar.classList.add('btn-limpar');
+  btnLimpar.style.color = '#f44336';
+  btnLimpar.style.fontWeight = 'bold';
+  btnLimpar.style.marginTop = '20px';
+  btnLimpar.style.textAlign = 'center';
+  tarefasContainer.appendChild(btnLimpar);
 
+  // Adiciona o evento de clique para limpar as tarefas
+  btnLimpar.addEventListener('click', function () {
+    while (tarefasConcluidas.firstChild) {
+      tarefasConcluidas.removeChild(tarefasConcluidas.firstChild);
+    }
+    salvarTarefas();
+  });
+}
+
+// Chama a função para criar o botão de limpar
+criaBotaoLimpar();
+
+// Adiciona uma tarefa ao clicar no botão 
+btnAddTarefa.addEventListener('click', adicionarTarefa);
 
 loadXP();
 adicionaTarefasSalvas();
