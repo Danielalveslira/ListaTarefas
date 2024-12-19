@@ -1,29 +1,72 @@
-/* Estilo padrão (modo claro) */
+/* Estilos Gerais */
+:root {
+  --cor-texto-claro: #000000;
+  --cor-fundo-claro: #ffffff;
+  --cor-borda-claro: #000000;
+  --cor-texto-escuro: #ffffff;
+  --cor-fundo-escuro: #0d1117;
+  --cor-borda-escuro: #2f81f7;
+  --cor-texto-concluido: #888;
+  --cor-borda-concluido: #ccc;
+  --cor-texto-claro: #333;
+  --cor-texto-escuro: #eee;
+}
+
+body {
+  font-family: sans-serif;
+}
+
 .tarefa {
+  display: flex;
+  flex-direction: column;
   padding: 15px;
-  border-radius: px;
-  background-color: #ffffff; /* Cor de fundo padrão no modo claro */
-  color: #000000 !important; /* Cor do texto padrão no modo claro (preto) */
+  border-radius: 10px;
+  border: 2px dotted var(--cor-borda-claro);
+  background-color: var(--cor-fundo-claro);
+  color: var(--cor-texto-claro);
   margin-bottom: 10px;
-  border-left: 2px dotted #000000;
+  word-wrap: break-word; /* Quebra palavras longas */
 }
 
-/* Modo escuro */
 .dark .tarefa {
-  color: #ffffff !important; /* Cor do texto no modo escuro (branco) */
-  background-color: #0d1117;
-  border-left: 2px dotted #2f81f7;
+  background-color: var(--cor-fundo-escuro);
+  color: var(--cor-texto-escuro);
+  border-color: var(--cor-borda-escuro);
 }
 
-#tarefas {
+.tarefa-texto {
+  margin-bottom: 5px;
+}
+
+.data-criacao {
+  font-size: 12px;
+  color: var(var(--cor-texto-claro));
+}
+
+.dark .data-criacao {
+  color: var(--cor-texto-escuro);
+}
+
+/* Tarefas Concluídas */
+#tarefas-concluidas .tarefa {
+  opacity: 0.7;
+  border-color: var(--cor-borda-concluido);
+}
+
+#tarefas-concluidas .tarefa-texto {
+  text-decoration: line-through;
+  color: var(--cor-texto-concluido);
+}
+
+/* Listas de Tarefas */
+#tarefas,
+#tarefas-concluidas {
   list-style-type: none;
   padding-left: 0;
   width: 100%;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 10px auto;
   padding: 10px;
-  word-wrap: break-word;
-  word-break: break-word;
 }
 
 header {
@@ -39,10 +82,20 @@ header {
   font-weight: bold;
   color: #ffffff;
   text-decoration: underline;
+  text-align: center;
   margin: 0 auto;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.concluido-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #161b22;
+  text-decoration: underline;
+  text-align: center;
+  margin: 10px;
 }
 
 #xp-container {
@@ -56,7 +109,6 @@ header {
 #xp-icon {
   width: 30px;
   height: 30px;
-  display: inline-block;
   margin-right: 5px;
 }
 
@@ -77,7 +129,7 @@ header {
   position: absolute;
   z-index: 1;
   top: 120%;
-  left: 20%;
+  left: 50%;
   transform: translateX(-50%);
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -100,30 +152,49 @@ header {
   opacity: 1;
 }
 
-#container-tarefas {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
+/* Input */
 #input-nova-tarefa {
-  width: 500px;
+  width: 100%; /* Ocupa 100% do container pai */
+  max-width: 580px; /* Largura máxima para alinhar com a lista */
   padding: 8px;
   border-radius: 4px;
+  box-sizing: border-box; /* Inclui padding e borda na largura */
+  margin: 0 auto; /* Centraliza o input */
+  display: block; /* Evita espaços extras */
 }
 
 .dark #input-nova-tarefa {
-  color: #000000;
+  color: #000;
 }
 
-/* Footer */
+/* Container de tarefas */
+#container-tarefas {
+  display: flex;
+  flex-direction: column; /* Alinha os elementos verticalmente */
+  align-items: center;
+  padding: 20px; /* Adiciona padding ao container */
+  min-height: calc(
+    100vh - 120px
+  ); /* Altura mínima para evitar que o footer sobreponha o conteúdo */
+}
+
+/* Botões */
+.botoes {
+  display: flex;
+  margin-top: 5px; /* Espaçamento entre o texto/data e os botões */
+}
+
+.botoes button {
+  margin: 0 5px; /* Espaçamento entre os botões */
+}
+
 .footer-fixo {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 60px;
+  display: flex;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(10px);
@@ -132,6 +203,6 @@ header {
 
 @media (max-width: 768px) {
   #input-nova-tarefa {
-    width: 71%;
+    max-width: 90%; /* Ajussta a largura máxima em telas menores */
   }
 }

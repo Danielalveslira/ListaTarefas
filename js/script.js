@@ -1,9 +1,11 @@
 const inputTarefa = document.querySelector('#input-nova-tarefa');
 const btnAddTarefa = document.querySelector('#btn-add-tarefa');
 const tarefas = document.querySelector('#tarefas');
+const tarefasConcluidas = document.querySelector('#tarefas-concluidas');
 const xpDisplay = document.querySelector('#xpPoints');
 let xpPoints = 0;
 
+/** Carrega o XP do localStorage */
 function loadXP() {
   const savedXP = localStorage.getItem('xpPoints');
   if (savedXP !== null) {
@@ -12,36 +14,25 @@ function loadXP() {
   }
 }
 
+/** Salva o XP no localStorage */
 function saveXP() {
   localStorage.setItem('xpPoints', xpPoints);
 }
 
+/** Cria um elemento de lista (<li>) para a tarefa */
 function criaLi() {
   const li = document.createElement('li');
-  li.classList.add(
-    'tarefa',
-    'p-2',
-    'rounded',
-    'bg-gray-200',
-    'dark:bg-gray-900',
-    'text-text-light'
-  );
+  li.classList.add('tarefa');
   return li;
 }
 
-inputTarefa.addEventListener('keypress', function (e) {
-  if (e.key === 'Enter') {
-    adicionarTarefa();
-  }
-});
-
-btnAddTarefa.addEventListener('click', adicionarTarefa);
-
+/** Limpa o input e foca nele */
 function limpaInput() {
   inputTarefa.value = '';
   inputTarefa.focus();
 }
 
+/** Cria os botões de Concluir e Apagar */
 function criaBotoes(li) {
   const divBotoes = document.createElement('div');
   divBotoes.classList.add('botoes');
@@ -54,6 +45,7 @@ function criaBotoes(li) {
   li.appendChild(divBotoes);
 }
 
+/** Cria um botão genérico */
 function criarBotao(texto, classe, cor) {
   const botao = document.createElement('button');
   botao.innerText = texto;
@@ -64,33 +56,53 @@ function criarBotao(texto, classe, cor) {
   return botao;
 }
 
-function criaTarefa(textoInput) {
+/** Cria uma nova tarefa */
+function criaTarefa(textoInput, dataCriacaoSalva, concluida = false) {
   const texto = textoInput.trim();
 
-  if (!validarTarefa(texto)) {
-    limpaInput();
-    return;
-  }
+  if (!texto) return;
 
   const li = criaLi();
   const tarefaTexto = document.createElement('span');
   tarefaTexto.classList.add('tarefa-texto');
   tarefaTexto.innerText = texto;
 
+  const dataCriacao = document.createElement('span');
+  dataCriacao.classList.add('data-criacao');
+
+  const dataAtual = dataCriacaoSalva ? new Date(dataCriacaoSalva) : new Date();
+  const opcoesDeData = {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  };
+  const dataFormatada = dataAtual.toLocaleDateString('pt-BR', opcoesDeData);
+
+  dataCriacao.innerHTML = `Criado em: ${dataFormatada}`;
+  li.dataset.dataCriacao = dataAtual.toISOString();
+  li.id = dataAtual.getTime();
+
   li.appendChild(tarefaTexto);
-  criaBotoes(li);
-  tarefas.appendChild(li);
+  li.appendChild(dataCriacao);
+  if (!concluida) {
+    criaBotoes(li);
+    li.appendChild(dataCriacao);
+    tarefas.appendChild(li);
+  } else {
+    li.appendChild(dataCriacao);
+    tarefasConcluidas.appendChild(li);
+  }
+  dataCriacao.style.marginLeft = '5px';
+  dataCriacao.style.fontSize = '0.9em';
+
   limpaInput();
-  salvarTarefa();
+  salvarTarefas();
 }
 
+/** Valida o texto da tarefa */
 function validarTarefa(texto) {
-  if (texto === '') {
-    alert("Você não digitou nenhuma tarefa 🔴");
-    return false;
-  }
-  if (texto.length > 150) {
-    alert("A tarefa não pode ter mais de 150 caracteres. 🔴");
+  if (texto.length > 400) {
+    alert("A tarefa não pode ter mais de 400 caracteres. ");
     return false;
   }
   const listaDeTarefas = Array.from(tarefas.querySelectorAll('.tarefa-texto')).map(tarefa => tarefa.innerText);
@@ -101,46 +113,85 @@ function validarTarefa(texto) {
   return true;
 }
 
+/** Adiciona uma tarefa */
 function adicionarTarefa() {
   if (!inputTarefa.value.trim()) {
-    alert("Você não digitou nenhuma tarefa 😮‍💨");
     limpaInput();
     return;
   }
-  criaTarefa(inputTarefa.value);
+  if (validarTarefa(inputTarefa.value)) {
+    criaTarefa(inputTarefa.value);
+  }
 }
 
+/** Atualiza o XP e salva no localStorage */
 function atualizarXP(incremento) {
   xpPoints = Math.max(0, xpPoints + incremento);
   xpDisplay.innerText = xpPoints.toFixed(1);
   saveXP();
 }
 
+/** Salva as tarefas no localStorage */
+function salvarTarefas() {
+  const tarefasPendentes = Array.from(tarefas.querySelectorAll('li')).map(li => ({
+    id: li.id,
+    texto: li.querySelector('.tarefa-texto').innerText,
+    dataCriacao: li.dataset.dataCriacao,
+    concluida: false,
+  }));
+
+  const tarefasConcluidasArray = Array.from(tarefasConcluidas.querySelectorAll('li')).map(li => ({
+    id: li.id,
+    texto: li.querySelector('.tarefa-texto').innerText,
+    dataCriacao: li.dataset.dataCriacao,
+    concluida: true,
+  }));
+
+  const todasAsTarefas = [...tarefasPendentes, ...tarefasConcluidasArray];
+  localStorage.setItem('tarefas', JSON.stringify(todasAsTarefas));
+}
+
+/** Restaura as tarefas do localStorage */
+function adicionaTarefasSalvas() {
+  const tarefasSalvas = JSON.parse(localStorage.getItem('tarefas'));
+
+  if (!tarefasSalvas) return;
+
+  tarefasSalvas.forEach(tarefa => {
+    criaTarefa(tarefa.texto, tarefa.dataCriacao, tarefa.concluida);
+  });
+}
+
+/** Lida com os cliques nos botões (CORREÇÃO PRINCIPAL) */
 document.addEventListener('click', function (e) {
   const el = e.target;
+
   if (el.classList.contains('concluir')) {
     atualizarXP(0.3);
-    el.parentElement.parentElement.remove();
-    salvarTarefa();
+    const tarefaLi = el.parentElement.parentElement;
+
+    // Remove os botões antes de mover o elemento
+    el.parentElement.remove();
+
+    tarefasConcluidas.appendChild(tarefaLi);
+    salvarTarefas();
   } else if (el.classList.contains('apagar')) {
     atualizarXP(-0.2);
     el.parentElement.parentElement.remove();
-    salvarTarefa();
+    salvarTarefas();
   }
 });
 
-function salvarTarefa() {
-  const listaDeTarefas = Array.from(tarefas.querySelectorAll('.tarefa-texto')).map(tarefa => tarefa.innerText);
-  localStorage.setItem('tarefas', JSON.stringify(listaDeTarefas));
-}
-
-function adicionaTarefasSalvas() {
-  const tarefasSalvas = localStorage.getItem('tarefas');
-  if (tarefasSalvas) {
-    const listaDeTarefas = JSON.parse(tarefasSalvas);
-    listaDeTarefas.forEach(criaTarefa);
+/** Adiciona uma tarefa ao pressionar Enter */
+inputTarefa.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    adicionarTarefa();
   }
-}
+});
+
+/** Adiciona uma tarefa ao clicar no botão */
+btnAddTarefa.addEventListener('click', adicionarTarefa);
+
 
 loadXP();
 adicionaTarefasSalvas();
