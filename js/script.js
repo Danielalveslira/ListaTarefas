@@ -1,3 +1,4 @@
+// Seletores globais
 const inputTarefa = document.querySelector('#input-nova-tarefa');
 const btnAddTarefa = document.querySelector('#btn-add-tarefa');
 const tarefas = document.querySelector('#tarefas');
@@ -5,6 +6,15 @@ const tarefasConcluidas = document.querySelector('#tarefas-concluidas');
 const xpDisplay = document.querySelector('#xpPoints');
 const tarefasContainer = document.querySelector('#tarefas-container');
 let xpPoints = 0;
+
+/**
+ * Função utilitária para formatar datas
+ * (Extraída para evitar repetição de código ao lidar com datas)
+ */
+function formatarData(data) {
+  const opcoesDeData = { day: '2-digit', month: '2-digit', year: 'numeric' };
+  return data.toLocaleDateString('pt-BR', opcoesDeData);
+}
 
 /** Carrega o XP do localStorage */
 function loadXP() {
@@ -46,6 +56,17 @@ function criaBotoes(li) {
   li.appendChild(divBotoes);
 }
 
+// Cria botão LimparTotal
+function criaBotaoLimpar(li) {
+  const divBotoes = document.createElement('div');
+  divBotoes.classList.add('botoes');
+
+  const botaoLimpar = criarBotao('Excluir', 'apagar', '#f44336');
+
+  divBotoes.appendChild(botaoLimpar);
+  li.appendChild(divBotoes);
+}
+
 /** Cria um botão genérico */
 function criarBotao(texto, classe, cor) {
   const botao = document.createElement('button');
@@ -72,27 +93,22 @@ function criaTarefa(textoInput, dataCriacaoSalva, concluida = false) {
   dataCriacao.classList.add('data-criacao');
 
   const dataAtual = dataCriacaoSalva ? new Date(dataCriacaoSalva) : new Date();
-  const opcoesDeData = {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  };
-  const dataFormatada = dataAtual.toLocaleDateString('pt-BR', opcoesDeData);
-
-  dataCriacao.innerHTML = `Criado em: ${dataFormatada}`;
+  dataCriacao.innerHTML = `Criado em: ${formatarData(dataAtual)}`; // Alterado para usar a função utilitária
   li.dataset.dataCriacao = dataAtual.toISOString();
   li.id = dataAtual.getTime();
 
   li.appendChild(tarefaTexto);
-  li.appendChild(dataCriacao);
+
   if (!concluida) {
     criaBotoes(li);
     li.appendChild(dataCriacao);
     tarefas.appendChild(li);
   } else {
     li.appendChild(dataCriacao);
+    criaBotaoLimpar(li);
     tarefasConcluidas.appendChild(li);
   }
+
   dataCriacao.style.marginLeft = '5px';
   dataCriacao.style.fontSize = '12px';
 
@@ -103,12 +119,12 @@ function criaTarefa(textoInput, dataCriacaoSalva, concluida = false) {
 /** Valida o texto da tarefa */
 function validarTarefa(texto) {
   if (texto.length > 400) {
-    alert("A tarefa não pode ter mais de 400 caracteres. ");
+    alert("A tarefa não pode ter mais de 400 caracteres.");
     return false;
   }
   const listaDeTarefas = Array.from(tarefas.querySelectorAll('.tarefa-texto')).map(tarefa => tarefa.innerText);
   if (listaDeTarefas.includes(texto)) {
-    alert('Essa tarefa já existe! 🟢');
+    alert('Essa tarefa já existe! 🔴');
     return false;
   }
   return true;
@@ -163,17 +179,15 @@ function adicionaTarefasSalvas() {
   });
 }
 
-/** Lida com os cliques nos botões (CORREÇÃO PRINCIPAL) */
+/** Lida com os cliques nos botões */
 document.addEventListener('click', function (e) {
   const el = e.target;
 
   if (el.classList.contains('concluir')) {
     atualizarXP(0.3);
     const tarefaLi = el.parentElement.parentElement;
-
-    // Remove os botões antes de mover o elemento
-    el.parentElement.remove();
-
+    el.parentElement.remove(); // Remove os botões ao mover o elemento
+    criaBotaoLimpar(tarefaLi); // Já adiciona o botão limpar ao concluir a tarefa
     tarefasConcluidas.appendChild(tarefaLi);
     salvarTarefas();
   } else if (el.classList.contains('apagar')) {
@@ -181,6 +195,7 @@ document.addEventListener('click', function (e) {
     el.parentElement.parentElement.remove();
     salvarTarefas();
   }
+
 });
 
 /** Adiciona uma tarefa ao pressionar Enter */
@@ -190,30 +205,7 @@ inputTarefa.addEventListener('keypress', function (e) {
   }
 });
 
-// Cria o botão de limpar tarefas concluídas
-function criaBotaoLimpar() {
-  const btnLimpar = document.createElement('button');
-  btnLimpar.innerText = 'Limpar Concluídas';
-  btnLimpar.classList.add('btn-limpar');
-  btnLimpar.style.color = '#f44336';
-  btnLimpar.style.fontWeight = 'bold';
-  btnLimpar.style.marginTop = '20px';
-  btnLimpar.style.textAlign = 'center';
-  tarefasContainer.appendChild(btnLimpar);
-
-  // Adiciona o evento de clique para limpar as tarefas
-  btnLimpar.addEventListener('click', function () {
-    while (tarefasConcluidas.firstChild) {
-      tarefasConcluidas.removeChild(tarefasConcluidas.firstChild);
-    }
-    salvarTarefas();
-  });
-}
-
-// Chama a função para criar o botão de limpar
-criaBotaoLimpar();
-
-// Adiciona uma tarefa ao clicar no botão 
+// Adiciona uma tarefa ao clicar no botão
 btnAddTarefa.addEventListener('click', adicionarTarefa);
 
 loadXP();
