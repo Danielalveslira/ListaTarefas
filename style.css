@@ -20,7 +20,7 @@ body {
   padding: 15px;
   border-radius: 10px;
   border: 2px dotted var(--cor-borda-claro);
-  background-color: var(--cor-fundo-claro);
+  /* background-color: #16325b; */
   color: var(--cor-texto-claro);
   margin-bottom: 10px;
   word-wrap: break-word;
@@ -59,10 +59,10 @@ body {
 #tarefas,
 #tarefas-concluidas {
   list-style-type: none;
-  padding: 10px;
+  /* padding: 10px; */
   width: 100%;
   max-width: 600px;
-  margin: 10px auto;
+  margin: auto;
 }
 
 .btn-limpar {
@@ -73,14 +73,14 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #161b22;
+  background-color: #c6e7ff;
   padding: 20px;
 }
 
 .header-title {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #ffffff;
+  color: #161b22;
   text-decoration: underline;
   position: absolute;
   left: 50%;
@@ -112,8 +112,11 @@ header {
 
 #xpPoints {
   font-size: 13px;
-  color: #ffffff;
+  color: #0d1117;
   font-family: "Fira Code", monospace;
+}
+.dark #xpPoints {
+  color: #ffffff;
 }
 
 #xp-tooltip {
@@ -160,7 +163,7 @@ header {
 
 #input-nova-tarefa {
   width: 70%;
-  max-width: 580px;
+  max-width: 530px;
   padding: 8px;
   border-radius: 4px;
   box-sizing: border-box;

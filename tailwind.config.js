@@ -5,10 +5,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "text-color": "#e6edf3",
+        "text-color": "#0d1117",
         "button-color": "#3fb950",
         "bg-azul": "#2f81f7",
-        'bg-default': '#ffffff', // cor de fundo do modo claro
+        'bg-default': '#C6E7FF', // cor de fundo do modo claro
         'bg-dark': '#0d1117', // cor de fundo do modo escuro
         'text-light': '#1a202c', // cor do texto no modo claro
         'text-dark': '#ffffff', // cor do texto no modo escuro
