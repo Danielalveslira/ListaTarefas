@@ -157,18 +157,6 @@ header {
   margin: 0 5px;
 }
 
-.footer-fixo {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(10px);
-}
-
 @media (max-width: 768px) {
   #input-nova-tarefa {
     max-width: 90%;
