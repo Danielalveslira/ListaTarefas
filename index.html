@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Lista de tarefas prática e interativa para organizar seu dia a dia. Use modos claro e escuro e acumule pontos XP enquanto conclui suas tarefas."
+      content="Lista de tarefas prática e interativa para organizar seu dia a dia. Use modos claro e escuro, edite tarefas!"
     />
     <meta
       name="keywords"
-      content="lista de tarefas, produtividade, organização, XP, modo escuro"
+      content="lista de tarefas, produtividade, organização, modo escuro"
     />
     <meta name="author" content="Wellington Lira" />
     <meta name="robots" content="index, follow" />
-    <title>Lista de Tarefas - Organize seu dia e ganhe XP!</title>
+    <title>Lista de Tarefas - Organize seu dia!</title>
     <link rel="shortcut icon" type="image/png" href="./img/listartarefas.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -35,7 +35,7 @@
     <!-- Open Graph Meta Tags -->
     <meta
       property="og:title"
-      content="Lista de Tarefas - Organize seu dia e ganhe XP!"
+      content="Lista de Tarefas - Organize seu dia!"
     />
     <meta
       property="og:description"
@@ -84,21 +84,13 @@
           loading="lazy"
         />
       </button>
-      <div
-        id="xp-container"
-        tabindex="0"
-        aria-label="Seção de pontos de experiência"
-      >
+    
         <div id="xp-icon">
           <img
             src="./img/points.png"
             alt="Ícone de pontos de experiência"
             loading="lazy"
           />
-        </div>
-        <span id="xpPoints">0</span>
-        <div id="xp-tooltip">XP</div>
-      </div>
     </header>
     <main class="m-5 flex flex-col gap-4 mb-20" id="container">
       <section class="flex items-center justify-center gap-4">
@@ -152,5 +144,6 @@
     </footer>
     <script src="./js/script.js"></script>
     <script src="./js/darkMode.js"></script>
+    <script src="./js/editarTarefa.js"></script>
   </body>
 </html>

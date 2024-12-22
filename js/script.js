@@ -3,9 +3,7 @@ const inputTarefa = document.querySelector('#input-nova-tarefa');
 const btnAddTarefa = document.querySelector('#btn-add-tarefa');
 const tarefas = document.querySelector('#tarefas');
 const tarefasConcluidas = document.querySelector('#tarefas-concluidas');
-const xpDisplay = document.querySelector('#xpPoints');
 const tarefasContainer = document.querySelector('#tarefas-container');
-let xpPoints = 0;
 
 /**
  * Função utilitária para formatar datas
@@ -14,20 +12,6 @@ let xpPoints = 0;
 function formatarData(data) {
   const opcoesDeData = { day: '2-digit', month: '2-digit', year: 'numeric' };
   return data.toLocaleDateString('pt-BR', opcoesDeData);
-}
-
-/** Carrega o XP do localStorage */
-function loadXP() {
-  const savedXP = localStorage.getItem('xpPoints');
-  if (savedXP !== null) {
-    xpPoints = parseFloat(savedXP);
-    xpDisplay.innerText = xpPoints.toFixed(1);
-  }
-}
-
-/** Salva o XP no localStorage */
-function saveXP() {
-  localStorage.setItem('xpPoints', xpPoints);
 }
 
 /** Cria um elemento de lista (<li>) para a tarefa */
@@ -49,9 +33,11 @@ function criaBotoes(li) {
   divBotoes.classList.add('botoes');
 
   const botaoConcluir = criarBotao('Concluir', 'concluir', '#4caf50');
+  const botaoEditar = criarBotao('Editar', 'editar', '#2196f3'); // Botão Editar
   const botaoApagar = criarBotao('Excluir', 'apagar', '#f44336');
 
   divBotoes.appendChild(botaoConcluir);
+  divBotoes.appendChild(botaoEditar);
   divBotoes.appendChild(botaoApagar);
   li.appendChild(divBotoes);
 }
@@ -75,6 +61,7 @@ function criarBotao(texto, classe, cor) {
   botao.style.color = cor;
   botao.style.fontWeight = 'bold';
   botao.style.marginRight = classe === 'concluir' ? '10px' : '0';
+  botao.style.marginRight = classe === 'apagar' ? '10px' : '0';
   return botao;
 }
 
@@ -141,12 +128,7 @@ function adicionarTarefa() {
   }
 }
 
-/** Atualiza o XP e salva no localStorage */
-function atualizarXP(incremento) {
-  xpPoints = Math.max(0, xpPoints + incremento);
-  xpDisplay.innerText = xpPoints.toFixed(1);
-  saveXP();
-}
+
 
 /** Salva as tarefas no localStorage */
 function salvarTarefas() {
@@ -183,19 +165,44 @@ function adicionaTarefasSalvas() {
 document.addEventListener('click', function (e) {
   const el = e.target;
 
+
+  // Obtém o elemento <li> mais próximo
+  const tarefaLi = el.closest('li');
+  if (!tarefaLi) return; // Sai se tarefaLi for nulo ou indefinido
+
+  // Verifica se a tarefa está em edição
+  const emEdicao = tarefaLi.classList.contains('em-edicao');
+
+  // Se a tarefa estiver em edição e o usuário clicar em 'concluir', mostra o alerta
+  if (emEdicao && el.classList.contains('concluir')) {
+    alert('Finalize a edição antes de concluir esta tarefa.');
+    return; // Não prossegue com a conclusão da tarefa
+  }
+
+  // Ação para concluir uma tarefa
   if (el.classList.contains('concluir')) {
-    atualizarXP(0.3);
-    const tarefaLi = el.parentElement.parentElement;
     el.parentElement.remove(); // Remove os botões ao mover o elemento
-    criaBotaoLimpar(tarefaLi); // Já adiciona o botão limpar ao concluir a tarefa
+    criaBotaoLimpar(tarefaLi); // Adiciona o botão limpar
     tarefasConcluidas.appendChild(tarefaLi);
     salvarTarefas();
-  } else if (el.classList.contains('apagar')) {
-    atualizarXP(-0.2);
-    el.parentElement.parentElement.remove();
+  }
+  // Ação para apagar uma tarefa
+  else if (el.classList.contains('apagar')) {
+    // Verifica se a tarefa foi concluída
+    const isConcluida = tarefasConcluidas.contains(tarefaLi);
+
+    if (!isConcluida) {
+    }
+    tarefaLi.remove();
     salvarTarefas();
   }
 
+  // Ação para salvar a tarefa editada
+  if (el.classList.contains('salvar-edicao')) {
+    // Remover a classe 'em-edicao' e salvar as alterações feitas
+    tarefaLi.classList.remove('em-edicao');
+    salvarTarefas();
+  }
 });
 
 /** Adiciona uma tarefa ao pressionar Enter */
@@ -208,5 +215,4 @@ inputTarefa.addEventListener('keypress', function (e) {
 // Adiciona uma tarefa ao clicar no botão
 btnAddTarefa.addEventListener('click', adicionarTarefa);
 
-loadXP();
 adicionaTarefasSalvas();

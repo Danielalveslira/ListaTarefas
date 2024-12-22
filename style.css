@@ -14,6 +14,17 @@ body {
   font-family: sans-serif;
 }
 
+.input-edicao {
+  background-color: #1a202c;
+  color: #fbfbfb;
+  padding: 6px;
+}
+
+.dark .input-edicao {
+  background-color: #fbfbfb;
+  color: #0d1117;
+}
+
 .tarefa {
   display: flex;
   flex-direction: column;
@@ -96,55 +107,10 @@ header {
   margin: 10px;
 }
 
-#xp-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  margin-right: 10px;
-}
-
 #xp-icon {
   width: 30px;
   height: 30px;
   margin-right: 5px;
-}
-
-#xpPoints {
-  font-size: 13px;
-  color: #0d1117;
-  font-family: "Fira Code", monospace;
-}
-.dark #xpPoints {
-  color: #ffffff;
-}
-
-#xp-tooltip {
-  visibility: hidden;
-  background-color: #6c757d;
-  color: #ffffff;
-  text-align: center;
-  padding: 5px 8px;
-  border-radius: 5px;
-  font-size: 0.75rem;
-  position: absolute;
-  z-index: 1;
-  top: 120%;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-#xp-tooltip::after {
-  content: "";
-  position: absolute;
-  top: -5px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent #6c757d transparent;
 }
 
 #xp-container:hover #xp-tooltip {
