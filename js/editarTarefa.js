@@ -36,7 +36,7 @@ function habilitarEdicao(tarefaLi) {
 
   // Substitui o botão "Editar" por "Salvar"
   const botaoEditar = tarefaLi.querySelector('.editar');
-  const botaoSalvar = criarBotao('Salvar', 'salvar', '#4caf50');
+  const botaoSalvar = criarBotao('Salvar', 'salvar', '#FCC737');
   botaoEditar.parentElement.replaceChild(botaoSalvar, botaoEditar);
 
   tarefaLi.classList.add('em-edicao');
